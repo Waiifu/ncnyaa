@@ -3,7 +3,7 @@
 #define _XOPEN_SOURCE
 #define _XOPEN_SOURCE_EXTENDED
 #include <wchar.h>
-#include <ncursesw/curses.h>
+#include <curses.h>
 
 int init_curses();
 void key_event(int ch);
