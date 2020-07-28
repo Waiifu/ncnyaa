@@ -20,6 +20,14 @@ run_command(const char * cmd, struct TorrentItem * item)
 }
 
 void
+run_copycommand(const char * copycmd, struct TorrentItem * item)
+{
+    setenv("TITLE", item->title, 1);
+    setenv("URL", item->link, 1);
+    system(config.copycmd);
+}
+
+void
 apply_config_opt(char * key, char * val)
 {
     if (!strcmp(key, "download")) {
@@ -30,6 +38,12 @@ apply_config_opt(char * key, char * val)
         if (config.cmd == NULL) {
             config.cmd = malloc((strlen(val)+1)*sizeof(*config.cmd));
             if (config.cmd != NULL) strcpy(config.cmd, val);
+        } else
+            printf("config: Duplicate option, ignoring: %s\n", key);
+    } else if (!strcmp(key, "copycmd")) {
+        if (config.copycmd == NULL) {
+            config.copycmd = malloc((strlen(val)+1)*sizeof(*config.copycmd));
+            if (config.copycmd != NULL) strcpy(config.copycmd, val);
         } else
             printf("config: Duplicate option, ignoring: %s\n", key);
     } else if (!strcmp(key, "path")) {
@@ -129,6 +143,7 @@ void
 cleanup()
 {
     free(config.cmd);
+    free(config.copycmd);
     free(config.path);
 }
 

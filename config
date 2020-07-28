@@ -4,17 +4,18 @@
 # or $HOME/.config/ncnyaa/config
 
 # Download torrent file when selected (yes/no)
-download=no
+download=yes
 
 # Torrent download path
-#path=download
+path=/media/veracrypt2/TRn/torrentfiles/
 
 # Run following command after selecting a torrent
 #   $TITLE = torrent title
 #   $URL = remote url
 #   $FILE = local torrent (if any)
 #cmd=xdg-open $FILE
-cmd=transmission-remote -a $URL
+cmd=qbittorrent "$FILE"
+copycmd=echo "$URL" | xclip -selection clipboard
 
 # Default category number
 category=3

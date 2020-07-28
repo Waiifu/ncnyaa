@@ -9,6 +9,7 @@ struct Config
     int download;
     char * path;
     char * cmd;
+    char * copycmd;
     int category;
 };
 
@@ -42,7 +43,7 @@ enum SortOrder
 
 struct Search
 {
-    char term[30];
+    char term[100];
     int category;
     enum SortType sort;
     enum SortOrder order;
@@ -72,6 +73,7 @@ struct TorrentList
 extern struct Config config;
 
 void run_command(const char * cmd, struct TorrentItem * item);
+void run_copycommand(const char * copycmd, struct TorrentItem * item);
 void apply_config_opt(char * key, char * val);
 int load_config(const char * name);
 int parse_config(const char * path);

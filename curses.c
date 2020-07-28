@@ -107,7 +107,7 @@ key_event(int ch)
             cycle_sort(); break;
         case 'O':
             cycle_order(); break;
-        case 'c':
+        case 'C':
             ask_categories(); break;
         case 's':
             ask_search(); perform_search(); break;
@@ -116,6 +116,8 @@ key_event(int ch)
         case 'd':
         case 10:
             download_selected(); break;
+        case 'c':
+            copy_selected(); break;
     }
 }
 
@@ -324,6 +326,21 @@ download_selected()
 }
 
 void
+copy_selected()
+{
+    if(!torrent_list.size) return;
+
+    if (config.copycmd != NULL) {
+        set_status("Copying...");
+        endwin();
+        run_copycommand(config.copycmd, get_selected());
+        refresh();
+    }
+
+    set_status("Copied.");
+}
+
+void
 move_choice(int add)
 {
     if(!torrent_list.size) return;
@@ -378,7 +395,7 @@ rewrite_help(int all)
     if (all) {
         werase(win_help);
         wmove(win_help, 0, 0);
-        waddstr(win_help, "c:Cat s:Search d:DL+Run o/O:Sort q:Quit");
+        waddstr(win_help, "C:Cat s:Search c:Copy d:DL+Run o/O:Sort q:Quit");
     }
     
     wmove(win_help, 0, COLS - 12);
